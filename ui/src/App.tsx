@@ -1,8 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Api } from './api/shared/api/axios-config';
 
 function App() {
+  const teste = async (id: number) => {
+    const res = await Api.get(`/country/`)
+    console.log(res.data)
+  }
+
+  teste(1)
   return (
     <div className="App">
       <header className="App-header">
