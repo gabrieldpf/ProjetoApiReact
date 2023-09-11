@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Api } from './api/shared/api/axios-config';
 import { Card } from './components/card/Card';
 import { InputSelect } from './components/inputs/input-select/InputSelect';
 import { InputText } from './components/inputs/input-text/InputText';
@@ -10,10 +9,24 @@ function App() {
   const [search, setSearch] = useState("")
   const [select, setSelect] = useState("")
 
-  const fetchAllCountries = async () => {
-    const res = await Api.get(`/country/`)
-    setCountries(res.data)
-  }
+  // const fetchAllCountries = async () => {
+  //   const res = await Api.get(`/country/`)
+  //   setCountries(res.data)
+  // }
+
+  useEffect(() => {
+    const fetchAllCountries = async () => {
+      try {
+        const response = await fetch("https://raw.githubusercontent.com/gabrieldpf/api-paises/main/db.json");
+        const data = await response.json();
+        setCountries(data.country);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchAllCountries();
+  }, []);
 
   const filterCountries = () => {
     var newCountries = [...countries]
@@ -43,11 +56,11 @@ function App() {
     {id: "Oceania", name: "Oceania"},
   ]
 
-  useEffect(() => {
-    if (countries.length <= 0) {
-      fetchAllCountries()
-    }
-  })
+  // useEffect(() => {
+  //   if (countries.length <= 0) {
+  //     fetchAllCountries()
+  //   }
+  // })
 
   return (
     <>
